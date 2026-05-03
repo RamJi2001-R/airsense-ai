@@ -1,32 +1,21 @@
-const express = require('express')
-const axios = require('axios')
+// localhost:8000 ki jagah ML service URL
+const ML_URL = process.env.ML_SERVICE_URL || 'https://airsense-ml-w1oj.onrender.com'
 
-const router = express.Router()
-
-// Get 24hr AQI Forecast
 router.get('/forecast/:aqi', async (req, res) => {
   try {
     const { aqi } = req.params
-    const response = await axios.get(
-      `http://localhost:8000/forecast/${aqi}`
-    )
+    const response = await axios.get(`${ML_URL}/forecast/${aqi}`)
     res.json(response.data)
   } catch (error) {
     res.status(500).json({ message: 'ML Service error' })
   }
 })
 
-// Predict AQI from pollutants
 router.post('/predict', async (req, res) => {
   try {
-    const response = await axios.post(
-      'http://localhost:8000/predict',
-      req.body
-    )
+    const response = await axios.post(`${ML_URL}/predict`, req.body)
     res.json(response.data)
   } catch (error) {
     res.status(500).json({ message: 'ML Service error' })
   }
 })
-
-module.exports = router
