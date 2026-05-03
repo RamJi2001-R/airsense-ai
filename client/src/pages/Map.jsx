@@ -57,14 +57,14 @@ const Map = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center px-8 py-10">
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center px-4 sm:px-6 md:px-8 py-8 sm:py-10">
 
       {/* Header */}
       <div className="w-full max-w-5xl mb-6">
-        <h1 className="text-4xl font-bold text-green-400 mb-2">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-2">
           🗺️ Live AQI Map
         </h1>
-        <p className="text-gray-400">
+        <p className="text-gray-400 text-sm sm:text-base">
           Real-time air quality across major Indian cities
         </p>
       </div>
@@ -74,7 +74,7 @@ const Map = () => {
         <div className="w-full max-w-5xl mb-6">
           <button
             onClick={loadAllCities}
-            className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-semibold transition"
+            className="bg-green-500 hover:bg-green-600 text-white px-4 sm:px-8 py-3 rounded-lg font-semibold transition text-sm w-full sm:w-auto"
           >
             {loading ? '🔄 Loading cities...' : '🗺️ Load Live AQI Map'}
           </button>
@@ -83,7 +83,7 @@ const Map = () => {
 
       {/* Legend */}
       {loaded && (
-        <div className="w-full max-w-5xl mb-4 flex flex-wrap gap-4">
+        <div className="w-full max-w-5xl mb-4 flex flex-wrap gap-2 sm:gap-4 justify-center sm:justify-start">
           {[
             { label: 'Good (0-50)', color: '#34D399' },
             { label: 'Moderate (51-100)', color: '#FBBF24' },
@@ -91,12 +91,12 @@ const Map = () => {
             { label: 'Unhealthy (151-200)', color: '#EF4444' },
             { label: 'Hazardous (200+)', color: '#A855F7' },
           ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2">
+            <div key={item.label} className="flex items-center gap-2\">
               <div
                 className="w-4 h-4 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
-              <span className="text-gray-300 text-sm">{item.label}</span>
+              <span className="text-gray-300 text-xs sm:text-sm\">{item.label}</span>
             </div>
           ))}
         </div>
@@ -107,7 +107,7 @@ const Map = () => {
         <MapContainer
           center={[22.5, 80.0]}
           zoom={5}
-          style={{ height: '550px', width: '100%' }}
+          style={{ height: window.innerWidth < 640 ? '400px' : '550px', width: '100%' }}
         >
           <TileLayer
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"

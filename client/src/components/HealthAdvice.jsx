@@ -61,13 +61,13 @@ const HealthAdvice = ({ aqi }) => {
   const advice = getAdvice(aqi)
 
   return (
-    <div className={`border ${advice.color} bg-gray-900 rounded-2xl p-6 mt-6 w-80`}>
-      <h3 className={`text-xl font-bold mb-4 ${advice.titleColor}`}>
+    <div className={`border ${advice.color} bg-gray-900 rounded-2xl p-4 sm:p-6 mt-6 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto`}>
+      <h3 className={`text-lg sm:text-xl font-bold mb-3 sm:mb-4 ${advice.titleColor}`}>
         {advice.title}
       </h3>
       <ul className="flex flex-col gap-2">
         {advice.tips.map((tip, index) => (
-          <li key={index} className="text-gray-300 text-sm">
+          <li key={index} className="text-gray-300 text-xs sm:text-sm">
             {tip}
           </li>
         ))}

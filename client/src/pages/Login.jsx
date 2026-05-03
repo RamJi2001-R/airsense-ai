@@ -28,9 +28,9 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-8 w-96">
-        <h2 className="text-3xl font-bold text-green-400 mb-6 text-center">
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4 py-6">
+      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 sm:p-8 w-full max-w-sm">
+        <h2 className="text-2xl sm:text-3xl font-bold text-green-400 mb-6 text-center">
           🌍 Login
         </h2>
 
@@ -39,7 +39,7 @@ const Login = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 mb-4 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-green-400"
+          className="w-full px-4 py-3 mb-4 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-green-400 text-sm"
         />
 
         <input
@@ -47,19 +47,19 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-3 mb-4 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-green-400"
+          className="w-full px-4 py-3 mb-4 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-green-400 text-sm"
         />
 
-        {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
+        {error && <p className="text-red-400 text-xs sm:text-sm mb-4">{error}</p>}
 
         <button
           onClick={handleLogin}
-          className="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold transition"
+          className="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold transition text-sm"
         >
           {loading ? '🔄 Logging in...' : 'Login'}
         </button>
 
-        <p className="text-gray-400 text-sm text-center mt-4">
+        <p className="text-gray-400 text-xs sm:text-sm text-center mt-4">
           Don't have an account?{' '}
           <Link to="/register" className="text-green-400 hover:underline">
             Register

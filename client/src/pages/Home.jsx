@@ -36,9 +36,9 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center px-4">
-      <h1 className="text-5xl font-bold text-green-400">🌍 AirSense AI</h1>
-      <p className="text-gray-400 mt-4 text-xl">
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center px-4 py-8">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-green-400 text-center">🌍 AirSense AI</h1>
+      <p className="text-gray-400 mt-4 text-sm sm:text-base md:text-xl text-center max-w-lg">
         Know how clean your city's air is — and stay safe
       </p>
 

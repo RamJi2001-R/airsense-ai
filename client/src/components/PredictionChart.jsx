@@ -34,20 +34,20 @@ const PredictionChart = ({ aqi }) => {
   }
 
   return (
-    <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 mt-6 w-full max-w-2xl">
-      <h3 className="text-white text-xl font-bold mb-4">
+    <div className="bg-gray-900 border border-gray-700 rounded-2xl p-3 sm:p-4 md:p-6 mt-6 w-full max-w-2xl mx-auto">
+      <h3 className="text-white text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4">
         📈 24 Hour AQI Forecast
-        <span className="text-green-400 text-sm font-normal ml-2">
+        <span className="text-green-400 text-xs sm:text-sm font-normal ml-1 sm:ml-2 block sm:inline">
           (ML Powered)
         </span>
       </h3>
 
       {loading ? (
-        <p className="text-green-400 animate-pulse text-center py-10">
+        <p className="text-green-400 animate-pulse text-center py-8 sm:py-10 text-sm">
           🤖 ML model generating forecast...
         </p>
       ) : (
-        <ResponsiveContainer width="100%" height={250}>
+        <ResponsiveContainer width="100%" height={window.innerWidth < 640 ? 200 : 250}>
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
             <XAxis

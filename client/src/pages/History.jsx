@@ -38,10 +38,10 @@ const History = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4">
         <div className="text-center">
-          <p className="text-white text-2xl mb-4">🔒 Please login to view history</p>
-          <a href="/login" className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg">
+          <p className="text-white text-lg sm:text-xl md:text-2xl mb-4">🔒 Please login to view history</p>
+          <a href="/login" className="bg-green-500 hover:bg-green-600 text-white px-4 sm:px-6 py-3 rounded-lg inline-block">
             Login
           </a>
         </div>
@@ -50,31 +50,31 @@ const History = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white px-8 py-10">
-      <h1 className="text-4xl font-bold text-green-400 mb-2">📜 Search History</h1>
-      <p className="text-gray-400 mb-8">Your recent AQI searches</p>
+    <div className="min-h-screen bg-gray-950 text-white px-4 sm:px-6 md:px-8 py-8 sm:py-10">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-2">📜 Search History</h1>
+      <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">Your recent AQI searches</p>
 
       {loading && (
-        <p className="text-green-400 animate-pulse">🔄 Loading history...</p>
+        <p className="text-green-400 animate-pulse text-sm">🔄 Loading history...</p>
       )}
 
       {!loading && history.length === 0 && (
-        <p className="text-gray-400">No history found — search a city first!</p>
+        <p className="text-gray-400 text-sm">No history found — search a city first!</p>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {history.map((log) => (
           <div
             key={log._id}
-            className="bg-gray-900 border border-gray-700 rounded-2xl p-6"
+            className="bg-gray-900 border border-gray-700 rounded-2xl p-4 sm:p-6"
           >
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
               📍 {log.city}
             </h3>
-            <p className={`text-4xl font-bold ${getAQIColor(log.aqi)}`}>
+            <p className={`text-3xl sm:text-4xl font-bold ${getAQIColor(log.aqi)}`}>
               {log.aqi}
             </p>
-            <p className={`text-sm mt-1 ${getAQIColor(log.aqi)}`}>
+            <p className={`text-xs sm:text-sm mt-1 ${getAQIColor(log.aqi)}`}>
               {getAQILabel(log.aqi)}
             </p>
             <p className="text-gray-500 text-xs mt-3">

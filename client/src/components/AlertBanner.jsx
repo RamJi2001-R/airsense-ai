@@ -20,7 +20,7 @@ const AlertBanner = ({ aqi }) => {
   const alert = getAlert(aqi)
 
   return (
-    <div className={`${alert.bg} text-white text-center py-3 px-6 rounded-xl mt-6 w-80 font-semibold animate-pulse`}>
+    <div className={`${alert.bg} text-white text-center py-2 sm:py-3 px-4 sm:px-6 rounded-xl mt-6 w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto font-semibold animate-pulse text-sm sm:text-base`}>
       {alert.message}
     </div>
   )
