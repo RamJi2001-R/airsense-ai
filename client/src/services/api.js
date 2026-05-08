@@ -112,34 +112,24 @@ export const fetchWeather = async (city) => {
   }
 }
 
-// Delete Single History Entry
-export const deleteHistoryEntry = async (logId) => {
+// Delete Single Log
+export const deleteAQILog = async (logId) => {
   try {
-    console.log('Deleting entry:', logId)
-    console.log('API URL:', `${API_URL}/api/aqi/history/${logId}`)
-    const response = await axios.delete(
-      `${API_URL}/api/aqi/history/${logId}`
-    )
-    console.log('Delete response:', response.data)
+    const response = await axios.delete(`${API_URL}/api/aqi/delete/${logId}`)
     return response.data
   } catch (error) {
-    console.error('Delete Error:', error.response?.data || error.message)
+    console.error('Delete Error:', error)
     return null
   }
 }
 
-// Delete All History for User
-export const deleteAllHistory = async (userId) => {
+// Clear All History
+export const clearAQIHistory = async (userId) => {
   try {
-    console.log('Deleting all history for user:', userId)
-    console.log('API URL:', `${API_URL}/api/aqi/history/user/${userId}`)
-    const response = await axios.delete(
-      `${API_URL}/api/aqi/history/user/${userId}`
-    )
-    console.log('Delete all response:', response.data)
+    const response = await axios.delete(`${API_URL}/api/aqi/clear/${userId}`)
     return response.data
   } catch (error) {
-    console.error('Delete All Error:', error.response?.data || error.message)
+    console.error('Clear Error:', error)
     return null
   }
 }

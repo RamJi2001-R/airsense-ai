@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAQI } from '../context/AQIContext'
-import { fetchAQI, getAQIHistory, deleteHistoryEntry } from '../services/api'
+import { fetchAQI, getAQIHistory } from '../services/api'
 import PredictionChart from '../components/PredictionChart'
 
 const Dashboard = () => {
@@ -30,20 +30,6 @@ const Dashboard = () => {
       }
     }
     setLoading(false)
-  }
-
-  const handleDeleteEntry = async (logId) => {
-    if (window.confirm('Delete this history entry?')) {
-      console.log('Attempting to delete:', logId)
-      const result = await deleteHistoryEntry(logId)
-      console.log('Delete result:', result)
-      if (result && result.message) {
-        setHistory(history.filter(log => log._id !== logId))
-        alert('✅ Entry deleted!')
-      } else {
-        alert('❌ Failed to delete. Try again.')
-      }
-    }
   }
 
   const getAQIColor = (aqi) => {
@@ -171,7 +157,6 @@ const Dashboard = () => {
                     <th className="text-left py-2 sm:py-3 px-1 sm:px-2">AQI</th>
                     <th className="text-left py-2 sm:py-3 px-1 sm:px-2">Status</th>
                     <th className="text-left py-2 sm:py-3 px-1 sm:px-2">Date</th>
-                    <th className="text-center py-2 sm:py-3 px-1 sm:px-2">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -189,14 +174,6 @@ const Dashboard = () => {
                       </td>
                       <td className="py-2 sm:py-3 px-1 sm:px-2 text-gray-400 text-xs">
                         {new Date(log.savedAt).toLocaleDateString()}
-                      </td>
-                      <td className="py-2 sm:py-3 px-1 sm:px-2 text-center">
-                        <button
-                          onClick={() => handleDeleteEntry(log._id)}
-                          className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs transition"
-                        >
-                          Delete
-                        </button>
                       </td>
                     </tr>
                   ))}
