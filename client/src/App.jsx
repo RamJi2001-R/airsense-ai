@@ -8,6 +8,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Compare from './pages/Compare'
 import Map from './pages/Map'
+import Weather from './pages/Weather'
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/compare" element={<Compare />} />
         <Route path="/map" element={<Map />} />
+        <Route path="/weather" element={<Weather />} />
       </Routes>
     </Router>
   )

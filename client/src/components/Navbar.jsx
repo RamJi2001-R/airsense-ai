@@ -30,6 +30,9 @@ const Navbar = () => {
   Compare
 </Link>
         <Link to="/map" className="hover:text-green-400 transition">Map</Link>
+        <Link to="/weather" className="hover:text-green-400 transition">
+  Weather
+</Link>
         {user ? (
           <div className="flex items-center gap-4">
             <span className="text-green-400">👤 {user.name}</span>

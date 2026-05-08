@@ -89,3 +89,57 @@ export const loginUser = async (email, password) => {
     return null
   }
 }
+
+// Fetch Weather Data
+export const fetchWeather = async (city) => {
+  try {
+    const response = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_WEATHER_TOKEN}&units=metric`
+    )
+    const data = response.data
+    return {
+      temp: data.main.temp,
+      feelsLike: data.main.feels_like,
+      humidity: data.main.humidity,
+      windSpeed: data.wind.speed,
+      description: data.weather[0].description,
+      icon: data.weather[0].icon,
+      city: data.name,
+    }
+  } catch (error) {
+    console.error('Weather API Error:', error)
+    return null
+  }
+}
+
+// Delete Single History Entry
+export const deleteHistoryEntry = async (logId) => {
+  try {
+    console.log('Deleting entry:', logId)
+    console.log('API URL:', `${API_URL}/api/aqi/history/${logId}`)
+    const response = await axios.delete(
+      `${API_URL}/api/aqi/history/${logId}`
+    )
+    console.log('Delete response:', response.data)
+    return response.data
+  } catch (error) {
+    console.error('Delete Error:', error.response?.data || error.message)
+    return null
+  }
+}
+
+// Delete All History for User
+export const deleteAllHistory = async (userId) => {
+  try {
+    console.log('Deleting all history for user:', userId)
+    console.log('API URL:', `${API_URL}/api/aqi/history/user/${userId}`)
+    const response = await axios.delete(
+      `${API_URL}/api/aqi/history/user/${userId}`
+    )
+    console.log('Delete all response:', response.data)
+    return response.data
+  } catch (error) {
+    console.error('Delete All Error:', error.response?.data || error.message)
+    return null
+  }
+}

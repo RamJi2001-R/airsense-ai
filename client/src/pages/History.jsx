@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAQI } from '../context/AQIContext'
-import { getAQIHistory } from '../services/api'
+import { getAQIHistory, deleteHistoryEntry, deleteAllHistory } from '../services/api'
 
 const History = () => {
   const { user } = useAQI()
@@ -18,6 +18,38 @@ const History = () => {
     const data = await getAQIHistory(user.id)
     if (data) setHistory(data)
     setLoading(false)
+  }
+
+  const handleDeleteEntry = async (logId) => {
+    if (window.confirm('Are you sure you want to delete this entry?')) {
+      setLoading(true)
+      console.log('Attempting to delete:', logId)
+      const result = await deleteHistoryEntry(logId)
+      console.log('Delete result:', result)
+      if (result && result.message) {
+        setHistory(history.filter(log => log._id !== logId))
+        alert('✅ Entry deleted successfully!')
+      } else {
+        alert('❌ Failed to delete entry. Please try again.')
+      }
+      setLoading(false)
+    }
+  }
+
+  const handleDeleteAll = async () => {
+    if (window.confirm('Are you sure you want to delete ALL history? This cannot be undone!')) {
+      setLoading(true)
+      console.log('Attempting to delete all history for user:', user.id)
+      const result = await deleteAllHistory(user.id)
+      console.log('Delete all result:', result)
+      if (result && result.message) {
+        setHistory([])
+        alert('✅ All history deleted successfully!')
+      } else {
+        alert('❌ Failed to delete history. Please try again.')
+      }
+      setLoading(false)
+    }
   }
 
   const getAQIColor = (aqi) => {
@@ -51,8 +83,21 @@ const History = () => {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white px-4 sm:px-6 md:px-8 py-8 sm:py-10">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-2">📜 Search History</h1>
-      <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">Your recent AQI searches</p>
+      <div className="flex justify-between items-start mb-6 sm:mb-8">
+        <div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-2">📜 Search History</h1>
+          <p className="text-gray-400 text-sm sm:text-base">Your recent AQI searches</p>
+        </div>
+        {history.length > 0 && (
+          <button
+            onClick={handleDeleteAll}
+            disabled={loading}
+            className="bg-red-500 hover:bg-red-600 disabled:bg-gray-600 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition"
+          >
+            🗑️ Clear All
+          </button>
+        )}
+      </div>
 
       {loading && (
         <p className="text-green-400 animate-pulse text-sm">🔄 Loading history...</p>
@@ -66,9 +111,17 @@ const History = () => {
         {history.map((log) => (
           <div
             key={log._id}
-            className="bg-gray-900 border border-gray-700 rounded-2xl p-4 sm:p-6"
+            className="bg-gray-900 border border-gray-700 rounded-2xl p-4 sm:p-6 relative hover:border-gray-600 transition"
           >
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+            <button
+              onClick={() => handleDeleteEntry(log._id)}
+              disabled={loading}
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-red-500 hover:bg-red-600 disabled:bg-gray-600 text-white p-1.5 sm:p-2 rounded-lg text-xs transition"
+              title="Delete this entry"
+            >
+              ✕
+            </button>
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-2 pr-8">
               📍 {log.city}
             </h3>
             <p className={`text-3xl sm:text-4xl font-bold ${getAQIColor(log.aqi)}`}>
