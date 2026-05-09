@@ -4,11 +4,9 @@ import AQICard from '../components/AQICard'
 import HealthAdvice from '../components/HealthAdvice'
 import AlertBanner from '../components/AlertBanner'
 import PredictionChart from '../components/PredictionChart'
+import AlertButton from '../components/AlertButton'
 import { fetchAQI, saveAQILog } from '../services/api'
 import { useAQI } from '../context/AQIContext'
-import AlertButton from '../components/AlertButton'
-
-
 
 const Home = () => {
   const [city, setCity] = useState('')
@@ -35,7 +33,6 @@ const Home = () => {
       setCity(data.city)
       setAqi(data.aqi)
 
-      // Save to backend if user is logged in
       if (user) {
         await saveAQILog(user.id, data.city, data.aqi, data.dominentPollutant)
       }
@@ -45,11 +42,12 @@ const Home = () => {
 
     setLoading(false)
   }
-  
 
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center px-4 py-8">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-green-400 text-center">🌍 AirSense AI</h1>
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-green-400 text-center">
+        🌍 AirSense AI
+      </h1>
       <p className="text-gray-400 mt-4 text-sm sm:text-base md:text-xl text-center max-w-lg">
         Know how clean your city's air is — and stay safe
       </p>
@@ -70,7 +68,7 @@ const Home = () => {
         <>
           <AlertBanner aqi={aqi} />
           <AQICard city={city} aqi={aqi} />
-          <AlertButton city={city} aqi={aqi} aqiLabel={AlertBanner.getAQILabel(aqi)} />
+          <AlertButton city={city} aqi={aqi} aqiLabel={getAQILabel(aqi)} />
           <PredictionChart aqi={aqi} />
           <HealthAdvice aqi={aqi} />
         </>
