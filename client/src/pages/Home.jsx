@@ -4,7 +4,6 @@ import AQICard from '../components/AQICard'
 import HealthAdvice from '../components/HealthAdvice'
 import AlertBanner from '../components/AlertBanner'
 import PredictionChart from '../components/PredictionChart'
-import AlertButton from '../components/AlertButton'
 import { fetchAQI, saveAQILog } from '../services/api'
 import { useAQI } from '../context/AQIContext'
 
@@ -15,13 +14,7 @@ const Home = () => {
   const [error, setError] = useState(null)
   const { user } = useAQI()
 
-  const getAQILabel = (aqi) => {
-    if (aqi <= 50) return 'Good'
-    if (aqi <= 100) return 'Moderate'
-    if (aqi <= 150) return 'Unhealthy for Sensitive'
-    if (aqi <= 200) return 'Unhealthy'
-    return 'Hazardous'
-  }
+  
 
   const handleSearch = async (searchedCity) => {
     setLoading(true)
@@ -68,7 +61,6 @@ const Home = () => {
         <>
           <AlertBanner aqi={aqi} />
           <AQICard city={city} aqi={aqi} />
-          <AlertButton city={city} aqi={aqi} aqiLabel={getAQILabel(aqi)} />
           <PredictionChart aqi={aqi} />
           <HealthAdvice aqi={aqi} />
         </>

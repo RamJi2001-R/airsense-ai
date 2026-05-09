@@ -134,15 +134,3 @@ export const clearAQIHistory = async (userId) => {
   }
 }
 
-// Send AQI Alert Email
-export const sendAlertEmail = async (email, city, aqi, aqiLabel) => {
-  try {
-    const response = await axios.post(`${API_URL}/api/alerts/email`, {
-      email, city, aqi, aqiLabel
-    })
-    return response.data
-  } catch (error) {
-    console.error('Alert Error:', error)
-    return null
-  }
-}
