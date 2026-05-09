@@ -9,23 +9,28 @@ const AlertButton = ({ city, aqi, aqiLabel }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  // Browser Notification
   const sendBrowserAlert = () => {
     if (!('Notification' in window)) {
       alert('Browser notifications not supported!')
       return
     }
-    Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        new Notification(`🚨 AQI Alert — ${city}`, {
-          body: `Current AQI: ${aqi} — ${aqiLabel}`,
-          icon: '/favicon.ico'
-        })
-      }
-    })
+    if (Notification.permission === 'granted') {
+      new Notification(`🚨 AQI Alert — ${city}`, {
+        body: `Current AQI: ${aqi} — ${aqiLabel}`,
+      })
+    } else {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          new Notification(`🚨 AQI Alert — ${city}`, {
+            body: `Current AQI: ${aqi} — ${aqiLabel}`,
+          })
+        } else {
+          alert('Please allow notifications in browser settings!')
+        }
+      })
+    }
   }
 
-  // Email Alert
   const handleEmailAlert = async () => {
     if (!email.trim()) return
     setLoading(true)
@@ -34,6 +39,8 @@ const AlertButton = ({ city, aqi, aqiLabel }) => {
       setSuccess(true)
       setShowForm(false)
       setTimeout(() => setSuccess(false), 3000)
+    } else {
+      alert('❌ Failed to send email — check server!')
     }
     setLoading(false)
   }
@@ -41,23 +48,23 @@ const AlertButton = ({ city, aqi, aqiLabel }) => {
   return (
     <div className="w-full max-w-2xl mt-4">
 
-      {/* Alert Buttons */}
       <div className="flex gap-3 flex-wrap">
         <button
+          type="button"
           onClick={sendBrowserAlert}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition cursor-pointer"
         >
           🔔 Browser Alert
         </button>
         <button
+          type="button"
           onClick={() => setShowForm(!showForm)}
-          className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition"
+          className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition cursor-pointer"
         >
           📧 Email Alert
         </button>
       </div>
 
-      {/* Email Form */}
       {showForm && (
         <div className="mt-4 bg-gray-900 border border-gray-700 rounded-xl p-4">
           <p className="text-gray-300 text-sm mb-3">
@@ -72,8 +79,9 @@ const AlertButton = ({ city, aqi, aqiLabel }) => {
               className="flex-1 px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-green-400 text-sm"
             />
             <button
+              type="button"
               onClick={handleEmailAlert}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition"
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition cursor-pointer"
             >
               {loading ? '🔄 Sending...' : 'Send'}
             </button>
@@ -81,7 +89,6 @@ const AlertButton = ({ city, aqi, aqiLabel }) => {
         </div>
       )}
 
-      {/* Success Message */}
       {success && (
         <p className="text-green-400 text-sm mt-3">
           ✅ Alert email sent successfully!
