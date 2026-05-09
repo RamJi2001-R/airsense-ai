@@ -6,6 +6,7 @@ require('dotenv').config()
 const authRoutes = require('./routes/auth')
 const aqiRoutes = require('./routes/aqi')
 const predictRoutes = require('./routes/predict')
+const alertRoutes = require('./routes/alerts')
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/aqi', aqiRoutes)
 app.use('/api/ml', predictRoutes)
+app.use('/api/alerts', alertRoutes)
 
 // MongoDB Connect
 mongoose.connect(process.env.MONGO_URI)

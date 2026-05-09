@@ -34,6 +34,13 @@ const Home = () => {
 
     setLoading(false)
   }
+  const getAQILabel = (aqi) => {
+  if (aqi <= 50) return 'Good'
+  if (aqi <= 100) return 'Moderate'
+  if (aqi <= 150) return 'Unhealthy for Sensitive'
+  if (aqi <= 200) return 'Unhealthy'
+  return 'Hazardous'
+}
 
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center px-4 py-8">
